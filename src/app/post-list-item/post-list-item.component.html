@@ -1,0 +1,25 @@
+<!-- utilisation de la directive ngClass pour déterminer la classe suivant la popularité du post -->
+<li [ngClass]="{'list-group-item': true,
+      'list-group-item-success' : ifItemSucess(),
+      'list-group-item-danger' : ifItemDanger()
+    }">
+  <!-- Utilisation de la directive ngStyle pour déterminer la couleur du texte suivant la popularité du post -->
+  <h4 [ngStyle]="{color: getColor()}">{{postItem.title}}</h4>
+
+  <!-- Affichage de la date de création du poste en utilisant un pipe date -->
+  <div>{{postItem.created_at | date: 'short'}}</div>
+
+  <!-- Affichage du contenu et du nombre de It du post -->
+  <p>{{postItem.content}}</p>
+  <p>#like : {{postItem.loveIts}}</p>
+
+  <!-- Afficage des boutons de like en utilisant l'event binding sur l'evenement click -->
+  <button class="btn btn-success"
+          (click)="onIncreaseLoveIts()">
+    Love It
+  </button>
+  <button class="btn btn-danger"
+          (click)="onDecreaseLoveIts()">
+    Don't love It
+  </button>
+</li>
