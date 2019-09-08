@@ -1,20 +1,39 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Post } from '../models/post.model';
+import { Subscription } from 'rxjs';
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss']
 })
-export class PostListComponent implements OnInit {
-  // Création d'une propriété avec le décorateur @Input pour réception de l'object liste des posts
-  @Input() postList: any;
+export class PostListComponent implements OnInit, OnDestroy {
 
-  // Varaible date pour affichage de la date en entête de la page (différent de la date des posts)
-  lastUpdate = new Date();
+  posts: Post[];
+  postsSubscription: Subscription;
 
-  constructor() { }
+
+  // import du service dans le constructeur 
+  constructor(private postsService: PostsService) { }
 
   ngOnInit() {
+    // Souscrire à l'observable Posts pour avoir tous les changements
+    this.postsSubscription = this.postsService.postsSubject.subscribe(
+      (posts: Post[]) => {
+        this.posts = posts;
+      }
+    );
+    // Initialisation de la liste local
+    this.postsService.emitPosts();
   }
 
+  // Suppression d'un post
+  onDeletePost(post: Post){
+     this.postsService.removePost(post);
+  }
+
+  ngOnDestroy() {
+    this.postsSubscription.unsubscribe();
+  }
 }

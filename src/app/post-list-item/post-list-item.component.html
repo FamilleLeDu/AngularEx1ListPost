@@ -3,23 +3,40 @@
       'list-group-item-success' : ifItemSucess(),
       'list-group-item-danger' : ifItemDanger()
     }">
-  <!-- Utilisation de la directive ngStyle pour déterminer la couleur du texte suivant la popularité du post -->
-  <h4 [ngStyle]="{color: getColor()}">{{postItem.title}}</h4>
+  <div class="row">
+    <div class="col-xs-9">
+      <!-- Utilisation de la directive ngStyle pour déterminer la couleur du texte suivant la popularité du post -->
+      <h4 [ngStyle]="{color: getColor()}">{{postItem.title}}</h4>
+    </div>
 
-  <!-- Affichage de la date de création du poste en utilisant un pipe date -->
-  <div>{{postItem.created_at | date: 'short'}}</div>
+    <div class="col-xs-3">
+      <!-- Affichage de la date de création du poste en utilisant un pipe date -->
+      <div>{{postItem.created_at | date: 'd MMM y, H:mm:ss'}}</div>
+    </div>
 
-  <!-- Affichage du contenu et du nombre de It du post -->
-  <p>{{postItem.content}}</p>
-  <p>#like : {{postItem.loveIts}}</p>
+    <div class="col-xs-12">
+      <!-- Affichage du contenu et du nombre de It du post -->
+      <p>{{postItem.content}}</p>
+      <p>#like : {{postItem.loveIts}}</p>
 
-  <!-- Afficage des boutons de like en utilisant l'event binding sur l'evenement click -->
-  <button class="btn btn-success"
-          (click)="onIncreaseLoveIts()">
-    Love It
-  </button>
-  <button class="btn btn-danger"
-          (click)="onDecreaseLoveIts()">
-    Don't love It
-  </button>
+      <div class="col-xs-1">
+        <!-- Afficage des boutons de like en utilisant l'event binding sur l'evenement click -->
+        <button class="btn btn-success" (click)="onIncreaseLoveIts()">
+          Love It
+        </button>
+      </div>
+      <div class="col-xs-1">
+        <button class="btn btn-danger" (click)="onDecreaseLoveIts()">
+          Don't love It
+        </button>
+      </div>
+      <div class="col-xs-10">
+         <!-- Afficage de suppression en utilisant l'event binding sur l'evenement click -->
+          <button class="btn btn-danger pull-right" (click)="onDeletePost()">
+            Suppression du post
+          </button>
+        </div>
+      </div>
+
+  </div>
 </li>

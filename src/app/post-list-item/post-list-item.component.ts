@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Post } from '../models/post.model';
+import { Router } from '@angular/router';
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'app-post-list-item',
@@ -8,22 +11,28 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PostListItemComponent implements OnInit {
 
   // Création d'une propriété avec le décorateur @Input pour réception de l'object post
-  @Input() postItem: any;
+  @Input() postItem: Post;
+  @Input() indexPosts: number;
 
 
-  constructor() { }
+  constructor(private router: Router, private postsService: PostsService) { }
 
   ngOnInit() {
   }
 
   // Méthode pour augmenter les Its
   onIncreaseLoveIts() {
-    this.postItem.loveIts++;
+    this.postsService.increaseLoveIts(this.indexPosts);
   }
 
   // Méthode pour diminuer les Its
   onDecreaseLoveIts() {
-    if (this.postItem.loveIts > 0) this.postItem.loveIts--;
+    this.postsService.decreaseLoveIts(this.indexPosts);
+  }
+
+  // Methode pour la suppression du post
+  onDeletePost() {
+    this.postsService.removePost(this.postItem);
   }
 
   // Méthode pour déterminer si le post est populaire #its >= 10

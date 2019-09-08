@@ -1,14 +1,20 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
-      <h2>Liste des Posts</h2>
+      <div class="col-xs-5">
+        <h2>Posts</h2>
       <!-- horodate d'affichage en utilisant le pipe date pour le format -->
-      <p> Mise à jour le {{lastUpdate | date: 'yyyy MMMM EEEE d' | uppercase}}</p>
-      <ul class="list-group">
+      </div>
+      <!--
+      <div class="col-xs-7 pull-right">
+        <p> Mise à jour le {{lastUpdate | date: 'yyyy MMMM EEEE d' | uppercase}}</p>
+      </div> -->
+      <div class="col-xs-12">
+        <ul class="list-group">
         <!-- tilisation de la directive ngFor pour afficher chaque post
                et utilisation de property binding pour passer le post vers le component post-list-item -->
-        <app-post-list-item *ngFor="let postItem of postList"
-                            [postItem]="postItem"></app-post-list-item>
+        <app-post-list-item *ngFor="let postItem of posts; let i=index"
+                            [postItem]="postItem"
+                            [indexPosts]="i"></app-post-list-item>
       </ul>
     </div>
   </div>
